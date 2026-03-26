@@ -1,0 +1,27 @@
+replicaCount: 2
+
+image:
+  repository: task-manager-backend
+  tag: latest
+  pullPolicy: Never   # use local image; change to IfNotPresent for a registry
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 5000
+  nodePort: 30080
+
+env:
+  databaseUrl: "postgresql://taskuser:taskpass@postgres-service:5432/taskdb"
+  mongoUrl: "mongodb://mongo-service:27017"
+  mongoDb: taskdb
+
+probes:
+  readiness:
+    path: /health
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  liveness:
+    path: /health
+    initialDelaySeconds: 15
+    periodSeconds: 20

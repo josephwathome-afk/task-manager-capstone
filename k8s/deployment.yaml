@@ -16,21 +16,15 @@ spec:
     spec:
       containers:
         - name: backend
-          image: task-manager-backend:latest   # build & push your image here
-          imagePullPolicy: IfNotPresent
+          image: task-manager-backend:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 5000
           env:
             - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: task-manager-secrets
-                  key: database-url
+              value: "postgresql://taskuser:taskpass@192.168.49.1:5432/taskdb"
             - name: MONGO_URL
-              valueFrom:
-                secretKeyRef:
-                  name: task-manager-secrets
-                  key: mongo-url
+              value: "mongodb://192.168.49.1:27017"
             - name: MONGO_DB
               value: taskdb
           readinessProbe:
