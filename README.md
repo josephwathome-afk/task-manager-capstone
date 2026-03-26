@@ -391,7 +391,7 @@ curl -X POST http://127.0.0.1:<PORT>/tasks/ \
 
 ### Teardown
 
-```bash
+```bash`
 helm uninstall task-manager
 minikube stop
 ```
